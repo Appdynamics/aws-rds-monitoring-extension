@@ -19,6 +19,10 @@ proxyConfig:
     username:
     password:
 
+
+#Filters metrics based on DB identifier names provided. Accepts regex patterns
+includeDBIdentifiers: ["blog-*", "demodb"]
+
 # Global metrics config for all accounts
 metricsConfig:
 
