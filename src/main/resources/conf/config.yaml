@@ -1,6 +1,6 @@
 accounts:
-  - awsAccessKey:
-    awsSecretKey:
+  - awsAccessKey: ""
+    awsSecretKey: ""
     displayAccountName: "AppD"
     
     # Regions where elastiCache is registered
