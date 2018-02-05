@@ -4,7 +4,7 @@
 	"displayName" : "AWS RDS Monitoring Extension",
 	"description" : "An AppDynamics extension to be used with a stand alone Java machine agent to provide metrics for Amazon RDS.",
 	"version" : "1.0.2",
-	"downloadLink" : "https://github.com/Appdynamics/aws-rds-monitoring-extension/releases/download/v1.0.2/AWSRDSMonitor-1.0.2.zip",
+	"downloadLink" : "https://github.com/Appdynamics/aws-rds-monitoring-extension/releases/download/AWSv1.0.2/AWSRDSMonitor-1.0.2.zip",
 	"imageLink" : "https://www.appdynamics.com/media/uploaded-images/1517557783/rds.png",
 	"configs" : [
 		{
