@@ -30,7 +30,7 @@
 		<dependency>
 			<groupId>com.appdynamics.extensions</groupId>
 			<artifactId>aws-cloudwatch-exts-commons</artifactId>
-			<version>1.0.4</version>
+			<version>1.0.6</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
