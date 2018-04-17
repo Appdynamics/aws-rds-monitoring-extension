@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class RDSConfiguration extends Configuration {
 
+    private String rdsInstance;
     private List<String> includeDBIdentifiers;
 
     public List<String> getIncludeDBIdentifiers() {
@@ -25,5 +26,13 @@ public class RDSConfiguration extends Configuration {
 
     public void setIncludeDBIdentifiers(List<String> includeDBIdentifiers) {
         this.includeDBIdentifiers = includeDBIdentifiers;
+    }
+
+    public String getRDSInstance() {
+        return rdsInstance;
+    }
+
+    public void setRDSInstance(String rdsInstance) {
+        this.rdsInstance = rdsInstance;
     }
 }

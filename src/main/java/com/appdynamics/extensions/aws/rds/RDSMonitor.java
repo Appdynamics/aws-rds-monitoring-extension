@@ -14,7 +14,6 @@ import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.rds.config.RDSConfiguration;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -34,6 +33,26 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
     }
 
     @Override
+    public String getDefaultMetricPrefix() {
+        return DEFAULT_METRIC_PREFIX;
+    }
+
+    @Override
+    public String getMonitorName() {
+        return "RDSMonitor";
+    }
+
+    @Override
+    protected int getTaskCount() {
+        return 3;
+    }
+
+    @Override
+    protected void initialize(RDSConfiguration config) {
+        super.initialize(config);
+    }
+
+    @Override
     protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(
             RDSConfiguration config) {
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);
@@ -42,7 +61,8 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
                 .Builder(config.getAccounts(),
                 config.getConcurrencyConfig(),
                 config.getMetricsConfig(),
-                metricsProcessor)
+                metricsProcessor,
+                config.getMetricPrefix())
                 .withCredentialsEncryptionConfig(config.getCredentialsDecryptionConfig())
                 .withProxyConfig(config.getProxyConfig())
                 .build();
@@ -53,15 +73,9 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
         return LOGGER;
     }
 
-    @Override
-    protected String getMetricPrefix(RDSConfiguration config) {
-        return StringUtils.isNotBlank(config.getMetricPrefix()) ?
-                config.getMetricPrefix() : DEFAULT_METRIC_PREFIX;
-    }
-
     private MetricsProcessor createMetricsProcessor(RDSConfiguration config) {
         return new RDSMetricsProcessor(
-                config.getMetricsConfig().getMetricTypes(),
-                config.getMetricsConfig().getExcludeMetrics(), config.getIncludeDBIdentifiers());
+                config.getMetricsConfig().getIncludeMetrics(),
+                config.getRDSInstance(), config.getIncludeDBIdentifiers());
     }
 }
