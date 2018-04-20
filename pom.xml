@@ -103,6 +103,7 @@
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<manifestEntries>
 										<Implementation-Title>AWS RDS Monitor v${project.version} Build Date ${maven.build.timestamp}</Implementation-Title>
+										<Main-Class>com.appdynamics.extensions.workbench.WorkbenchServerLauncher</Main-Class>
 									</manifestEntries>
 								</transformer>
 							</transformers>
@@ -123,8 +124,7 @@
 								<mkdir dir="${target.dir}" />
 								<copy todir="${target.dir}">
 									<fileset dir="src/main/resources/conf" includes="monitor.xml" />
-									<fileset dir="src/main/resources" includes="conf/config.yaml" />
-									<fileset dir="src/main/resources" includes="conf/region-endpoints.yaml" />
+									<fileset dir="src/main/resources/conf" includes="config.yaml" />
 									<fileset dir="${project.basedir}" includes="LICENSE.txt"/>
 									<fileset dir="${project.basedir}" includes="NOTICE.txt"/>
 								</copy>
