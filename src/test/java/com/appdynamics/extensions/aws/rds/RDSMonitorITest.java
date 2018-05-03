@@ -28,14 +28,6 @@ public class RDSMonitorITest {
 
 	private RDSMonitor classUnderTest = new RDSMonitor();
 
-	private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
-			"Custom Metrics", METRIC_PATH_SEPARATOR, "Amazon RDS", METRIC_PATH_SEPARATOR);
-
-	@Before
-	public void init() throws Exception {
-		//Mockito.when(classUnderTest.getDefaultMetricPrefix()).thenReturn(DEFAULT_METRIC_PREFIX);
-	}
-
 	@Test
 	public void testMetricsCollectionCredentialsEncrypted() throws Exception {
 		Map<String, String> args = Maps.newHashMap();
