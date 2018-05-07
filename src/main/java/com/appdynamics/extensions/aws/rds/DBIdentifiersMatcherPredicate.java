@@ -46,4 +46,8 @@ public class DBIdentifiersMatcherPredicate implements Predicate<Metric> {
 
         return patternPredicate.apply(dbIdentifier);
     }
+
+    public Predicate<CharSequence> getPatternPredicate() {
+        return patternPredicate;
+    }
 }

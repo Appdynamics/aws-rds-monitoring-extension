@@ -8,21 +8,13 @@
 
 package com.appdynamics.extensions.aws.rds;
 
-import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
-import static org.junit.Assert.assertTrue;
-
-import com.amazonaws.services.cloudwatch.model.ListMetricsRequest;
-import com.amazonaws.services.cloudwatch.model.Metric;
-import com.appdynamics.extensions.conf.MonitorContextConfiguration;
 import com.google.common.collect.Maps;
 import com.singularity.ee.agent.systemagent.api.TaskOutput;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
-import java.util.ArrayList;
 import java.util.Map;
+
+import static org.junit.Assert.assertTrue;
 
 public class RDSMonitorITest {
 

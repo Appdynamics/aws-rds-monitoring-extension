@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
  */
 public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguration> {
 
-    private static final Logger LOGGER = Logger.getLogger("com.singularity.extensions.aws.RDSMonitor");
+    private static final Logger LOGGER = Logger.getLogger(RDSMonitor.class);
 
     private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
             "Custom Metrics", METRIC_PATH_SEPARATOR, "Amazon RDS", METRIC_PATH_SEPARATOR);
@@ -75,7 +75,6 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
 
     private MetricsProcessor createMetricsProcessor(RDSConfiguration config) {
         return new RDSMetricsProcessor(
-                config.getMetricsConfig().getIncludeMetrics(),
-                config.getRDSInstance(), config.getIncludeDBIdentifiers());
+                config.getMetricsConfig().getIncludeMetrics(), config.getIncludeDBIdentifiers());
     }
 }

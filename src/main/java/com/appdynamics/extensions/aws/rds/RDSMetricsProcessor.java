@@ -34,15 +34,11 @@ public class RDSMetricsProcessor implements MetricsProcessor {
 
 
     private List<IncludeMetric> includeMetrics;
-
-    private String rdsInstance;
-
     private List<String> includeDBIdentifiers;
 
-    public RDSMetricsProcessor(List<IncludeMetric> includeMetrics, String rdsInstance, List<String> includeDBIdentifiers) {
+    public RDSMetricsProcessor(List<IncludeMetric> includeMetrics, List<String> includeDBIdentifiers) {
 
         this.includeMetrics = includeMetrics;
-        this.rdsInstance = rdsInstance;
         this.includeDBIdentifiers = includeDBIdentifiers;
     }
 
