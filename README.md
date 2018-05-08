@@ -37,9 +37,48 @@ Please place the extension in the **"monitors"** directory of your **Machine Age
      ```
      metricPrefix: "Server|Component:100|Custom Metrics|Amazon EC2|"
      ```
-2. Configure "awsAccessKey" and "awsSecretKey". If you are running this extension inside an EC2 instance which has IAM profile configured then you don't have to configure these values, extension will use IAM profile to authenticate.
-3. Configure "regions". Extension collects metrics from all the regions configured here.
-4. If you want to encrypt the "awsAccessKey" and "awsSecretKey" then follow the "Credentials Encryption" section and provide the encrypted values in "awsAccessKey" and "awsSecretKey". Configure "enableDecryption" of "credentialsDecryptionConfig" to true and provide the encryption key in "encryptionKey"
+2. Configure "awsAccessKey", "awsSecretKey" and "regions"". If you are running this extension inside an EC2 instance which has IAM profile configured then you don't have to configure these values, extension will use IAM profile to authenticate.
+
+    For example
+    ```
+    #Add you list of AWS accounts here
+    accounts:
+      - awsAccessKey: "XXXXXXX1"
+        awsSecretKey: "XXXXXXX1"
+        displayAccountName: "Test1"
+        regions: ["us-east-1","us-west-1","us-west-2"]
+
+      - awsAccessKey: "XXXXXXX2"
+        awsSecretKey: "XXXXXXX2"
+        displayAccountName: "Test2"
+        regions: ["eu-central-1","eu-west-1"]
+    ```
+3. If you want to encrypt the "awsAccessKey" and "awsSecretKey" then follow the "Credentials Encryption" section and provide the encrypted values in "awsAccessKey" and "awsSecretKey". Configure "enableDecryption" of "credentialsDecryptionConfig" to true and provide the encryption key in "encryptionKey"
+
+    For example,
+    ```
+    #Encryption key for Encrypted password.
+    credentialsDecryptionConfig:
+        enableDecryption: "true"
+        encryptionKey: "XXXXXXXX"
+    ```
+4. If you want to filer metrics based on DB identifier. Please configure as below:
+
+    ```
+    includeDBIdentifiers: ["blog-*", "demodb"]
+    ```
+5. Configure the numberOfThreads
+     ```
+     concurrencyConfig:
+        noOfAccountThreads: 3
+        noOfRegionThreadsPerAccount: 3
+        noOfMetricThreadsPerRegion: 3
+     ```
+6. Configure the monitoring level as shown below. Allowed values are Basic and Detailed. Refer [this](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.html) for more information
+   Basic will fire CloudWatch API calls every 5 minutes. Detailed will fire CloudWatch API calls every 1 minutes
+    ```
+    cloudWatchMonitoring: "Basic"
+    ```
 
 
 ### config.yaml
