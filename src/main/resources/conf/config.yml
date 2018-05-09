@@ -23,18 +23,7 @@ proxyConfig:
 #Filters metrics based on DB identifier names provided. Accepts regex patterns
 includeDBIdentifiers: ["blog-*", "demodb"]
 
-    metricsTimeRange:
-      startTimeInMinsBeforeNow: 5
-      endTimeInMinsBeforeNow: 0
 
-    # Rate limit ( per second ) for GetMetricStatistics, default value is 400. https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_limits.html
-    getMetricStatisticsRateLimit: 400
-
-    # 
-    # The max number of retry attempts for failed retryable requests 
-    # (ex: 5xx error responses from a service) or throttling errors
-    #
-    maxErrorRetrySize: 0
 
 concurrencyConfig:
   noOfAccountThreads: 3
@@ -302,3 +291,15 @@ metricsConfig:
          delta: false
          multiplier: 1
 
+    metricsTimeRange:
+      startTimeInMinsBeforeNow: 5
+      endTimeInMinsBeforeNow: 0
+
+    # Rate limit ( per second ) for GetMetricStatistics, default value is 400. https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_limits.html
+    getMetricStatisticsRateLimit: 400
+
+    #
+    # The max number of retry attempts for failed retryable requests
+    # (ex: 5xx error responses from a service) or throttling errors
+    #
+    maxErrorRetrySize: 0
