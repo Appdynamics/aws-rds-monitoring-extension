@@ -28,9 +28,6 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
 
     public RDSMonitor() {
         super(RDSConfiguration.class);
-        //#TODO The following log statement is automatically printed from appd-exts-commons. Please remove if this is redundant.
-        LOGGER.info(String.format("Using AWS RDS Monitor Version [%s]",
-                this.getClass().getPackage().getImplementationTitle()));
     }
 
     @Override
