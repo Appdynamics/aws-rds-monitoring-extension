@@ -28,6 +28,7 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
 
     public RDSMonitor() {
         super(RDSConfiguration.class);
+        //#TODO The following log statement is automatically printed from appd-exts-commons. Please remove if this is redundant.
         LOGGER.info(String.format("Using AWS RDS Monitor Version [%s]",
                 this.getClass().getPackage().getImplementationTitle()));
     }
@@ -62,7 +63,7 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
                 config.getConcurrencyConfig(),
                 config.getMetricsConfig(),
                 metricsProcessor,
-                config.getMetricPrefix())
+                config.getMetricPrefix())//#TODO Please use metricPrefix from ContextConfiguration class -> getContextConfiguration().getMetricPrefix()
                 .withCredentialsDecryptionConfig(config.getCredentialsDecryptionConfig())
                 .withProxyConfig(config.getProxyConfig())
                 .build();
