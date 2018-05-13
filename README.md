@@ -31,11 +31,11 @@ Please place the extension in the **"monitors"** directory of your **Machine Age
 ## Configuration
 
 1. Configure the "COMPONENT_ID" under which the metrics need to be reported. This can be done by changing the value of `<COMPONENT_ID>` in
-     metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|Amazon EC2|".
+     metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|Amazon RDS|".
 
      For example,
      ```
-     metricPrefix: "Server|Component:100|Custom Metrics|Amazon EC2|"
+     metricPrefix: "Server|Component:100|Custom Metrics|Amazon RDS|"
      ```
 2. Configure "awsAccessKey", "awsSecretKey" and "regions"". If you are running this extension inside an EC2 instance which has IAM profile configured then you don't have to configure these values, extension will use IAM profile to authenticate.
 
