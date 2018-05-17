@@ -60,7 +60,7 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
                 config.getConcurrencyConfig(),
                 config.getMetricsConfig(),
                 metricsProcessor,
-                getContextConfiguration().getMetricPrefix())
+                config.getMetricPrefix())
                 .withCredentialsDecryptionConfig(config.getCredentialsDecryptionConfig())
                 .withProxyConfig(config.getProxyConfig())
                 .build();
