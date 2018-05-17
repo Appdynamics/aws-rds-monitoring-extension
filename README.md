@@ -1,4 +1,4 @@
-#AWS RDS Monitoring Extension
+# AWS RDS Monitoring Extension
 
 ## Use Case
 Captures RDS statistics from Amazon CloudWatch and displays them in the AppDynamics Metric Browser.
