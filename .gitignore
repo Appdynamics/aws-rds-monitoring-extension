@@ -1,6 +1,10 @@
-.idea
+target
+*.iml
+.settings
 .classpath
 .project
-.settings/
-target/
-.iml
+*.log
+*.ipr
+*.iws
+.idea
+.DS_Store

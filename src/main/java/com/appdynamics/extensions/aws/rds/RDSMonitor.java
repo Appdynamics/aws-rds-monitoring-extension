@@ -14,7 +14,6 @@ import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.rds.config.RDSConfiguration;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -22,15 +21,33 @@ import org.apache.log4j.Logger;
  */
 public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguration> {
 
-    private static final Logger LOGGER = Logger.getLogger("com.singularity.extensions.aws.RDSMonitor");
+    private static final Logger LOGGER = Logger.getLogger(RDSMonitor.class);
 
     private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
             "Custom Metrics", METRIC_PATH_SEPARATOR, "Amazon RDS", METRIC_PATH_SEPARATOR);
 
     public RDSMonitor() {
         super(RDSConfiguration.class);
-        LOGGER.info(String.format("Using AWS RDS Monitor Version [%s]",
-                this.getClass().getPackage().getImplementationTitle()));
+    }
+
+    @Override
+    public String getDefaultMetricPrefix() {
+        return DEFAULT_METRIC_PREFIX;
+    }
+
+    @Override
+    public String getMonitorName() {
+        return "RDSMonitor";
+    }
+
+    @Override
+    protected int getTaskCount() {
+        return 3;
+    }
+
+    @Override
+    protected void initialize(RDSConfiguration config) {
+        super.initialize(config);
     }
 
     @Override
@@ -42,8 +59,9 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
                 .Builder(config.getAccounts(),
                 config.getConcurrencyConfig(),
                 config.getMetricsConfig(),
-                metricsProcessor)
-                .withCredentialsEncryptionConfig(config.getCredentialsDecryptionConfig())
+                metricsProcessor,
+                config.getMetricPrefix())
+                .withCredentialsDecryptionConfig(config.getCredentialsDecryptionConfig())
                 .withProxyConfig(config.getProxyConfig())
                 .build();
     }
@@ -53,15 +71,8 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
         return LOGGER;
     }
 
-    @Override
-    protected String getMetricPrefix(RDSConfiguration config) {
-        return StringUtils.isNotBlank(config.getMetricPrefix()) ?
-                config.getMetricPrefix() : DEFAULT_METRIC_PREFIX;
-    }
-
     private MetricsProcessor createMetricsProcessor(RDSConfiguration config) {
         return new RDSMetricsProcessor(
-                config.getMetricsConfig().getMetricTypes(),
-                config.getMetricsConfig().getExcludeMetrics(), config.getIncludeDBIdentifiers());
+                config.getMetricsConfig().getIncludeMetrics(), config.getIncludeDBIdentifiers());
     }
 }
