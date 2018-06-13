@@ -20,7 +20,12 @@ import java.util.List;
 public class DBIdentifiersMatcherPredicate implements Predicate<Metric> {
 
     private List<String> includeDBIdentifiers;
-    private Predicate<CharSequence> patternPredicate;
+    private Predicate<CharSequence> patternPredicate = new Predicate<CharSequence>() {
+        @Override
+        public boolean apply(CharSequence charSequence) {
+            return false;
+        }
+    };
 
     public DBIdentifiersMatcherPredicate(List<String> includeDBIdentifiers) {
         this.includeDBIdentifiers = includeDBIdentifiers;
