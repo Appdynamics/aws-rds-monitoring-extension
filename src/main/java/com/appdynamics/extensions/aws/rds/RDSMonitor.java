@@ -47,10 +47,7 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
 
     @Override
     protected List<Map<String, ?>> getServers() {
-        Map<String, String> serversMap = new HashMap<String, String>();
-        List<Map<String, ?>> serversList = new ArrayList<Map<String, ?>>();
-        serversList.add(serversMap);
-        return serversList;
+        return new ArrayList<Map<String, ?>>();
     }
 
     @Override
