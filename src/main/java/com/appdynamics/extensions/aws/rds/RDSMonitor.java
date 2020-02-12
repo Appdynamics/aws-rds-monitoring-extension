@@ -8,13 +8,18 @@
 
 package com.appdynamics.extensions.aws.rds;
 
-import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
-
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.rds.config.RDSConfiguration;
 import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
 
 /**
  * @author Satish Muddam
@@ -41,8 +46,8 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
     }
 
     @Override
-    protected int getTaskCount() {
-        return 3;
+    protected List<Map<String, ?>> getServers() {
+        return new ArrayList<Map<String, ?>>();
     }
 
     @Override
@@ -75,4 +80,5 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
         return new RDSMetricsProcessor(
                 config.getMetricsConfig().getIncludeMetrics(), config.getIncludeDBIdentifiers());
     }
+
 }
