@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.LongAdder;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({DBIdentifiersMatcherPredicate.class})
-@PowerMockIgnore({"org.apache.*, javax.xml.*"})
 public class RDSMetricsProcessorTest {
 
     @Mock
