@@ -155,7 +155,7 @@ Always feel free to fork and contribute any changes directly here on [GitHub](ht
 ## Version
 |          Name            |  Version   |
 |--------------------------|------------|
-|Extension Version         |2.0.4       |
+|Extension Version         |2.0.5       |
 |Controller Compatibility  |3.7 or Later|
 |Machine Agent             |4.5.13+     |
-|Last Update               |05/05/2020  |
+|Last Update               |30/10/2020  |
