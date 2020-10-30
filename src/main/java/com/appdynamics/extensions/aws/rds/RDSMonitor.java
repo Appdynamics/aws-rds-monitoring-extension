@@ -16,7 +16,6 @@ import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,7 +78,7 @@ public class RDSMonitor extends SingleNamespaceCloudwatchMonitor<RDSConfiguratio
 
     private MetricsProcessor createMetricsProcessor(RDSConfiguration config) {
         return new RDSMetricsProcessor(
-                config.getMetricsConfig().getIncludeMetrics(), config.getIncludeDBIdentifiers());
+                config.getMetricsConfig().getIncludeMetrics(), config.getDimensions());
     }
 
 }

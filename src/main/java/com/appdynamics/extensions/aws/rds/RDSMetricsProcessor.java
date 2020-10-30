@@ -10,12 +10,15 @@ package com.appdynamics.extensions.aws.rds;
 
 import com.amazonaws.services.cloudwatch.AmazonCloudWatch;
 import com.amazonaws.services.cloudwatch.model.DimensionFilter;
+import com.appdynamics.extensions.aws.config.Dimension;
 import com.appdynamics.extensions.aws.config.IncludeMetric;
 import com.appdynamics.extensions.aws.dto.AWSMetric;
 import com.appdynamics.extensions.aws.metric.NamespaceMetricStatistics;
 import com.appdynamics.extensions.aws.metric.StatisticType;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessorHelper;
+import com.appdynamics.extensions.aws.predicate.MultiDimensionPredicate;
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,29 +37,24 @@ public class RDSMetricsProcessor implements MetricsProcessor {
 
 
     private List<IncludeMetric> includeMetrics;
-    private List<String> includeDBIdentifiers;
+    private List<Dimension> dimensions;
+    private List<DimensionFilter> dimensionFilters;
 
-    public RDSMetricsProcessor(List<IncludeMetric> includeMetrics, List<String> includeDBIdentifiers) {
+    public RDSMetricsProcessor(List<IncludeMetric> includeMetrics, List<Dimension> dimensions) {
 
         this.includeMetrics = includeMetrics;
-        this.includeDBIdentifiers = includeDBIdentifiers;
+        this.dimensions = dimensions;
     }
 
     public List<AWSMetric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName, LongAdder awsRequestsCounter) {
+        MultiDimensionPredicate predicate = new MultiDimensionPredicate(dimensions);
 
-        List<DimensionFilter> dimensions = new ArrayList<DimensionFilter>();
-
-        DimensionFilter dimensionFilter = new DimensionFilter();
-        dimensionFilter.withName(DIMENSIONS);
-
-        dimensions.add(dimensionFilter);
-
-        DBIdentifiersMatcherPredicate predicate = new DBIdentifiersMatcherPredicate(includeDBIdentifiers);
+        dimensionFilters = getDimensionFilters();
 
         return MetricsProcessorHelper.getFilteredMetrics(awsCloudWatch, awsRequestsCounter,
                 NAMESPACE,
                 includeMetrics,
-                dimensions,
+                dimensionFilters,
                 predicate);
     }
 
@@ -66,7 +64,10 @@ public class RDSMetricsProcessor implements MetricsProcessor {
 
     public List<com.appdynamics.extensions.metrics.Metric> createMetricStatsMapForUpload(NamespaceMetricStatistics namespaceMetricStats) {
         Map<String, String> dimensionToMetricPathNameDictionary = new HashMap<String, String>();
-        dimensionToMetricPathNameDictionary.put(DIMENSIONS, "DBInstance Identifier");
+
+        for(Dimension dimension: dimensions){
+            dimensionToMetricPathNameDictionary.put(dimension.getName(),dimension.getDisplayName());
+        }
 
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,
                 dimensionToMetricPathNameDictionary, false);
@@ -74,6 +75,16 @@ public class RDSMetricsProcessor implements MetricsProcessor {
 
     public String getNamespace() {
         return NAMESPACE;
+    }
+
+    private List<DimensionFilter> getDimensionFilters() {
+        List<DimensionFilter> dimensionFilters = Lists.newArrayList();
+        for (Dimension dimension : dimensions) {
+            DimensionFilter dbDimensionFilter = new DimensionFilter();
+            dbDimensionFilter.withName(dimension.getName());
+            dimensionFilters.add(dbDimensionFilter);
+        }
+        return dimensionFilters;
     }
 
 }
