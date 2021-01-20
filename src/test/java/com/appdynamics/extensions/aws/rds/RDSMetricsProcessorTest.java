@@ -4,6 +4,7 @@ import com.amazonaws.services.cloudwatch.AmazonCloudWatch;
 import com.amazonaws.services.cloudwatch.model.ListMetricsRequest;
 import com.amazonaws.services.cloudwatch.model.ListMetricsResult;
 import com.amazonaws.services.cloudwatch.model.Metric;
+import com.appdynamics.extensions.aws.config.Dimension;
 import com.appdynamics.extensions.aws.config.IncludeMetric;
 
 import org.junit.Assert;
@@ -29,7 +30,7 @@ public class RDSMetricsProcessorTest {
     ListMetricsResult listMetricsResult;
 
 
-    private RDSMetricsProcessor rdsMetricsProcessor = new RDSMetricsProcessor(new ArrayList<IncludeMetric>(), new ArrayList<String>());
+    private RDSMetricsProcessor rdsMetricsProcessor = new RDSMetricsProcessor(new ArrayList<IncludeMetric>(), new ArrayList<Dimension>());
 
     @Before
     public void init() throws Exception {
