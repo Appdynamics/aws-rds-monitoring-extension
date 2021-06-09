@@ -1,5 +1,11 @@
 # AppDynamics Extensions AWS RDS CHANGELOG
 
+## 2.0.7 - May 19, 2021
+1. Update to aws-cloudwtch-exts-commons 2.2.5 from 2.2.4
+
+## 2.0.6 - Jan 20, 2021
+1. Update to aws-cloudwtch-exts-commons 2.2.4 from 2.2.3.1
+
 ## 2.0.5 - Oct 30, 2020
 1. Implemented changes related to configurable dimension
 
