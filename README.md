@@ -3,8 +3,6 @@
 ## Use Case
 Captures RDS statistics from Amazon CloudWatch and displays them in the AppDynamics Metric Browser.
 
-**Note : By default, the Machine agent can only send a fixed number of metrics to the controller. This extension potentially reports thousands of metrics, so to change this limit, please follow the instructions mentioned [here](https://docs.appdynamics.com/display/PRO40/Metrics+Limits).** 
-
 ## Prerequisite
 
 If you don't want to provide awsAccessKey and awsSecretKey, please run the extension on EC2 instance and configure Instance Profile by granting below permissions
@@ -15,7 +13,7 @@ If you don't want to provide awsAccessKey and awsSecretKey, please run the exten
 "cloudwatch:ListMetrics"
 ~~~
 
-In order to use this extension, you do need a [Standalone JAVA Machine Agent](https://docs.appdynamics.com/display/PRO44/Java+Agent) or [SIM Agent](https://docs.appdynamics.com/display/PRO44/Server+Visibility).  For more details on downloading these products, please  visit [here](https://download.appdynamics.com/).
+Before the extension is installed, the prerequisites mentioned [here](https://community.appdynamics.com/t5/Knowledge-Base/Extensions-Prerequisites-Guide/ta-p/35213) need to be met. Please do not proceed with the extension installation if the specified prerequisites are not met.
 
 The extension needs to be able to connect to AWS in order to collect and send metrics. To do this, you will have to either establish a remote connection in between the extension and the product, or have an agent on the same machine running the product in order for the extension to collect and send the metrics.
 
@@ -42,6 +40,8 @@ Please place the extension in the **"monitors"** directory of your **Machine Age
      ```
      metricPrefix: "Server|Component:100|Custom Metrics|Amazon RDS|"
      ```
+More details around metric prefix can be found [here](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695).
+
 2. Configure "awsAccessKey", "awsSecretKey" and "regions"". If you are running this extension inside an EC2 instance which has IAM profile configured then you don't have to configure these values, extension will use IAM profile to authenticate.
 
     For example
@@ -67,10 +67,13 @@ Please place the extension in the **"monitors"** directory of your **Machine Age
         enableDecryption: "true"
         encryptionKey: "XXXXXXXX"
     ```
-4. If you want to filer metrics based on DB identifier. Please configure as below:
+4. If you want to filer metrics based on DB identifier, please configure as below. Configuring .* will fetch metrics for all DBs for configured account and region.
 
     ```
-    includeDBIdentifiers: ["blog-*", "demodb"]
+    dimensions:
+       - name: "DBInstanceIdentifier"
+         displayName: "DBInstanceIdentifier"
+         values: ["blog*", "demodb"]
     ```
 5. Configure the numberOfThreads
      ```
@@ -92,16 +95,16 @@ Please place the extension in the **"monitors"** directory of your **Machine Age
      | :---------------- | :-------------- | :------------------------------ | :------------------------------------------------------------------------------------------------------------- |
      | alias             | metric name     | Any string                      | The substitute name to be used in the metric browser instead of metric name.                                   |
      | statType          | "ave"           | "AVERAGE", "SUM", "MIN", "MAX"  | AWS configured values as returned by API                                                                       |
-     | aggregationType   | "AVERAGE"       | "AVERAGE", "SUM", "OBSERVATION" | [Aggregation qualifier](https://docs.appdynamics.com/display/PRO44/Build+a+Monitoring+Extension+Using+Java)    |
-     | timeRollUpType    | "AVERAGE"       | "AVERAGE", "SUM", "CURRENT"     | [Time roll-up qualifier](https://docs.appdynamics.com/display/PRO44/Build+a+Monitoring+Extension+Using+Java)   |
-     | clusterRollUpType | "INDIVIDUAL"    | "INDIVIDUAL", "COLLECTIVE"      | [Cluster roll-up qualifier](https://docs.appdynamics.com/display/PRO44/Build+a+Monitoring+Extension+Using+Java)|
+     | aggregationType   | "AVERAGE"       | "AVERAGE", "SUM", "OBSERVATION" | [Aggregation qualifier](https://docs.appdynamics.com/display/latest/Build+a+Monitoring+Extension+Using+Java)    |
+     | timeRollUpType    | "AVERAGE"       | "AVERAGE", "SUM", "CURRENT"     | [Time roll-up qualifier](https://docs.appdynamics.com/display/latest/Build+a+Monitoring+Extension+Using+Java)   |
+     | clusterRollUpType | "INDIVIDUAL"    | "INDIVIDUAL", "COLLECTIVE"      | [Cluster roll-up qualifier](https://docs.appdynamics.com/display/latest/Build+a+Monitoring+Extension+Using+Java)|
      | multiplier        | 1               | Any number                      | Value with which the metric needs to be multiplied.                                                            |
      | convert           | null            | Any key value map               | Set of key value pairs that indicates the value to which the metrics need to be transformed. eg: UP:0, DOWN:1  |
      | delta             | false           | true, false                     | If enabled, gives the delta values of metrics instead of actual values.                                        |
 
      For example,
      ```
-     - name: "CPUUtilization"
+            - name: "CPUUtilization"
               alias: "CPUUtilization"
               statType: "ave"
               aggregationType: "OBSERVATION"
@@ -140,6 +143,7 @@ Always feel free to fork and contribute any changes directly here on [GitHub](ht
 |          Name            |  Version   |
 |--------------------------|------------|
 |Extension Version         |2.0.7       |
-|Controller Compatibility  |4.5 or Later|
-|Machine Agent             |4.5.13+     |
 |Last Update               |19/05/2021  |
+|Changes list              |[ChangeLog](https://github.com/Appdynamics/aws-rds-monitoring-extension/blob/master/CHANGELOG.md)|
+
+**Note**: While extensions are maintained and supported by customers under the open-source licensing model, they interact with agents and Controllers that are subject to [AppDynamics’ maintenance and support policy](https://docs.appdynamics.com/latest/en/product-and-release-announcements/maintenance-support-for-software-versions). Some extensions have been tested with AppDynamics 4.5.13+ artifacts, but you are strongly recommended against using versions that are no longer supported.
