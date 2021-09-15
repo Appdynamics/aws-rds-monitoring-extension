@@ -131,7 +131,7 @@ Workbench is an inbuilt feature provided with each extension in order to assist 
 ## Troubleshooting
 1. Please make sure correct accessKey and secretKey are provided in config.yml.
 2. Please verify the correct regions have been configured
-3. Enssure that the required permissions have been given to the account being used with the extension.
+3. Ensure that the required permissions have been given to the account being used with the extension.
 4. Please follow the steps listed in this [troubleshooting-document](https://community.appdynamics.com/t5/Knowledge-Base/How-to-troubleshoot-missing-custom-metrics-or-extensions-metrics/ta-p/28695) in order to troubleshoot your issue. These are a set of common issues that customers might have faced during the installation of the extension.
 
 
